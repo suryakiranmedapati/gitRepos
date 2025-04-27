@@ -2,29 +2,43 @@ name: Snyk Security Scan
 
 on:
   push:
-    branches: [master]
+    branches: 
+      - main
   pull_request:
-    branches: [master]
+    branches:
+      - main
 
 jobs:
-  security:
+  snyk:
     runs-on: ubuntu-latest
 
     steps:
+      # Checkout the code from the repository
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # Set up Node.js (here we're using version 18 as an example)
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: '18'
 
+      # Install dependencies (npm install)
       - name: Install dependencies
         run: npm install
 
-      - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/node@v1
+      # Run the Snyk security test to check for vulnerabilities
+      - name: Run Snyk test
+        uses: snyk/actions/node@master  # Use the latest version of snyk/actions
         env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}  # Snyk API token from secrets
         with:
-          command: test
+          command: test  # This checks for vulnerabilities
+
+      # Optional: You can also monitor and send the snapshot to the Snyk dashboard
+      # - name: Monitor with Snyk
+      #   uses: snyk/actions/node@master
+      #   env:
+      #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      #   with:
+      #     command: monitor  # This sends the snapshot to Snyk's dashboard
