@@ -5,6 +5,8 @@ function addNumbers(a: number, b: number): number {
     return a + b;
 }
 
+//comment added by Surya
+
 // Function to greet a user
 function greetUser(name: string): string {
     return `Hello, ${name}! Welcome to TypeScript.`;
