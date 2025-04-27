@@ -48,4 +48,3 @@ function insecureDeserialize(serializedCode: string): void {
 console.log(insecureHash("example"));
 executeCommand(";");
 insecureDeserialize('console.log("This is insecure");');
-// general update
